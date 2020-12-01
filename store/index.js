@@ -1,10 +1,21 @@
 export const state = () => ({
-  token: ""
+  token: "",
+  user: {
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    birthday: null,
+    country: ""
+  }
 });
 
 export const getters = {
   token: state => {
     return state.token;
+  },
+  user: state => {
+    return state.user;
   }
 };
 
@@ -14,6 +25,9 @@ export const mutations = {
   },
   logout(state) {
     state.token = "";
+  },
+  saveUser(state, payload) {
+    state.user = payload;
   }
 };
 
@@ -23,5 +37,8 @@ export const actions = {
   },
   logout({ commit }) {
     commit("logout");
+  },
+  saveUser({ commit }, user) {
+    commit("saveUser", user);
   }
 };
