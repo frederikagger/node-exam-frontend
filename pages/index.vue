@@ -2,7 +2,7 @@
   <div>
     <Header />
     <div class="container mx-auto">
-      <h1 class="text-white text-6xl font-semibold text-center mt-5">Welcome</h1>
+      <h1 class="text-white text-5xl font-semibold text-center mt-5">Welcome to the coolest social network!</h1>
     </div>
   </div>
 </template>
@@ -11,7 +11,11 @@
 import Header from "../components/Header.vue";
 export default {
   components: { Header },
-  middleware: "auth"
+  middleware: "auth",
+  async created() {
+        const user = await this.$axios.$get("/user");
+        this.$store.dispatch("saveUser", user);
+  }
 };
 </script>
 
