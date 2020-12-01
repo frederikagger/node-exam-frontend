@@ -58,18 +58,6 @@
         <div
           class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
         >
-          <div class="flex-shrink-0 flex items-center">
-            <img
-              class="block lg:hidden h-8 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-              alt="Workflow"
-            />
-            <img
-              class="hidden lg:block h-8 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-              alt="Workflow"
-            />
-          </div>
           <div class="hidden sm:block sm:ml-6">
             <div class="flex space-x-4">
               <a
@@ -132,7 +120,7 @@
                 <img
                   @click="toggle"
                   class="h-8 w-8 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  :src="[profileImage ? profileImage : require('~/assets/anonymous.svg')]"
                   alt=""
                 />
               </button>
@@ -154,17 +142,17 @@
               aria-orientation="vertical"
               aria-labelledby="user-menu"
             >
-              <a
-                href="#"
+              <router-link
+                :to="'/profile'"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 role="menuitem"
-                >Your Profile</a
+                >Profile</router-link
               >
-              <a
-                href="#"
+              <router-link
+                :to="'/settings'"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 role="menuitem"
-                >Settings</a
+                >Settings</router-link
               >
               <a @click="signout"
                 href="#"
@@ -214,8 +202,8 @@
 <script>
 export default {
   computed: {
-    token() {
-      return this.$store.getters.token;
+    profileImage() {
+      return this.$store.getters.user.profileImage;
     }
   },
   data() {
