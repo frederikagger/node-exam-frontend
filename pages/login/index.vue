@@ -16,6 +16,7 @@
       />
       <input
         v-model="user.password"
+        @keyup.enter="login"
         id="password"
         class="p-1 placeholder-gray-600 focus:placeholder-gray-400 border mb-4 text-black text-lg bg-indigo-50 rounded-md border-transparent bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
         type="password"
