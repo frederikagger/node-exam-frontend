@@ -11,14 +11,15 @@
         </h4>
         <div class="flex">
           <input
-            :placeholder="user.firstname"
+           v-model="user.firstname"
+          
             id="firstname"
             class="p-1 placeholder-black w-1/2 mr-3 focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
             type="text"
             required
           />
           <input
-            :placeholder="user.lastname"
+            v-model="user.lastname"
             id="lastname"
             class="p-1 placeholder-black w-1/2 focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
             type="text"
@@ -26,19 +27,19 @@
           />
         </div>
         <input
-          :placeholder="user.email"
+          v-model="user.email"
           id="email"
           class="p-1 placeholder-black focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
           type="text"
         />
         <input
-          placeholder="******"
+          v-model="user.password"
           id="password"
           class="p-1 placeholder-black focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
           type="password"
         />
         <input
-          :placeholder="user.birthday"
+          v-model="user.birthday"
           id="birthday"
           class="p-1 placeholder-black focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
           type="date"
@@ -47,9 +48,9 @@
           name="countries"
           id="country"
           class="p-1 placeholder-black focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-          placeholder=""
+          
         >
-          <option value="" disabled hidden>Country</option>
+          <option :value="user.country" disabled hidden>Country</option>
           <option
             v-for="country in countries"
             :key="country"
@@ -73,34 +74,36 @@ import myHeader from "../../components/Header.vue";
 export default {
   components: { myHeader },
   middleware: "auth",
-  created() {
-    console.log(typeof this.user.birthday);
+  async created() {
+    try {
+      this.user = await this.$axios.$get("/user");
+      this.user.birthday = this.user.birthday.slice(0,10);
+      console.log(this.user.birthday);
+    } catch(error){
+      console.log(error);
+    }
   },
   data() {
     return {
-      /*    user: {
+       user: {
         firstname: "",
         lastname: "",
         email: "",
         password: "",
         birthday: null,
         country: ""
-      }, */
+      },
       countries: ["Denmark", "Sweden", "Norway", "Finland"]
     };
   },
-  computed: {
-    user() {
-      return this.$store.getters.user;
-    }
-  },
   methods: {
-    updateProfile() {
+    async updateProfile() {
       try {
-        this.$axios.patch("/user", {
-          lastname: "bob1"
+        const response = await this.$axios.patch("/user", {
+          user: this.user
         });
-      } catch(error){
+        //console.log(response);
+      } catch (error) {
         console.log(error);
       }
     }
