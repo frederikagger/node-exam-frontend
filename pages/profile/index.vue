@@ -1,36 +1,109 @@
 <template>
   <div>
-    <Header />
+    <myHeader />
     <div class="container mx-auto">
-      <h1
-        class="text-center text-white font-semibold tracking-wide text-2xl md:text-4xl mt-4"
-      >
-        Profile
-      </h1>
       <div
-        class="bg-white rounded-md max-w-lg md:max-w-3xl p-4 m-4 flex flex-col mx-auto leading-0"
+        id="card"
+        class="max-w-xs mt-10 md:mt-24 p-5 mx-auto flex flex-col bg-white rounded-xl h-80 lg:h-96 shadow-2x md:p-10 md:max-w-lg"
       >
-        <h3 class="text-2xl">
-          Name: {{ user.firstname + " " + user.lastname }}
-        </h3>
-        <h3 class="text-2xl">Email: {{ user.email }}</h3>
-        <h3 class="text-2xl">Birthday: {{ user.birthday | formatDate }}</h3>
+        <h4 class="text-4xl mb-6 font-bold text-center text-indigo-500">
+          Profile
+        </h4>
+        <div class="flex">
+          <input
+            :placeholder="user.firstname"
+            id="firstname"
+            class="p-1 placeholder-black w-1/2 mr-3 focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            type="text"
+            required
+          />
+          <input
+            :placeholder="user.lastname"
+            id="lastname"
+            class="p-1 placeholder-black w-1/2 focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            type="text"
+            required
+          />
+        </div>
+        <input
+          :placeholder="user.email"
+          id="email"
+          class="p-1 placeholder-black focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          type="text"
+        />
+        <input
+          placeholder="******"
+          id="password"
+          class="p-1 placeholder-black focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          type="password"
+        />
+        <input
+          :placeholder="user.birthday"
+          id="birthday"
+          class="p-1 placeholder-black focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          type="date"
+        />
+        <select
+          name="countries"
+          id="country"
+          class="p-1 placeholder-black focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          placeholder=""
+        >
+          <option value="" disabled hidden>Country</option>
+          <option
+            v-for="country in countries"
+            :key="country"
+            :value="country"
+            >{{ country }}</option
+          >
+        </select>
+        <button
+          @click="updateProfile"
+          class="bg-indigo-500 mb-4 shadow-md text-lg text-white font-medium h-10 rounded-md hover:bg-indigo-400"
+        >
+          Update profile
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Header from "../../components/Header.vue";
+import myHeader from "../../components/Header.vue";
 export default {
-  components: { Header },
+  components: { myHeader },
   middleware: "auth",
+  created() {
+    console.log(typeof this.user.birthday);
+  },
+  data() {
+    return {
+      /*    user: {
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+        birthday: null,
+        country: ""
+      }, */
+      countries: ["Denmark", "Sweden", "Norway", "Finland"]
+    };
+  },
   computed: {
     user() {
       return this.$store.getters.user;
-    },
+    }
+  },
+  methods: {
+    updateProfile() {
+      try {
+        this.$axios.patch("/user", {
+          lastname: "bob1"
+        });
+      } catch(error){
+        console.log(error);
+      }
+    }
   }
 };
 </script>
-
-<style></style>
