@@ -31,6 +31,7 @@
         class="p-1 placeholder-gray-600 focus:placeholder-gray-400 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
         type="text"
         placeholder="Email"
+        required
       />
       <input
         v-model="user.password"
@@ -38,6 +39,7 @@
         class="p-1 placeholder-gray-600 focus:placeholder-gray-400 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
         type="password"
         placeholder="Password"
+        required
       />
       <input
         v-model="user.birthday"
@@ -45,6 +47,7 @@
         class="p-1 placeholder-gray-600 focus:placeholder-gray-400 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
         type="date"
         placeholder="Date of birth"
+        required
       />
       <select
         name="countries"
@@ -60,10 +63,11 @@
       </select>
       <div class="inline-block mb-3">
         <input
-          v-model="user.agreement"
+          v-model="agreement"
           id="agreement"
           class="p-1 mr-3 placeholder-gray-600 focus:placeholder-gray-400 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
           type="checkbox"
+          required
         />
         <label for="agreement" class="text-lg">
           Agree to the terms of service?</label
@@ -79,6 +83,12 @@
       <div class="text-center tracking-tight">
         Already have an account?
         <NuxtLink to="/login" class="text-pink-600">Login</NuxtLink>
+      </div>
+      <div
+        v-if="error"
+        class="bg-pink-600 rounded-md mt-4 text-white p-2 font-medium text-center text-lg"
+      >
+        {{ error }}
       </div>
     </div>
   </div>
@@ -96,18 +106,24 @@ export default {
         birthday: null,
         country: ""
       },
-      countries: ["Denmark", "Sweden", "Norway", "Finland"]
+      countries: ["Denmark", "Sweden", "Norway", "Finland"],
+      agreement: false,
+      error: ""
     };
   },
   methods: {
     async signup() {
+      if (!this.agreement) {
+        this.error = "You'll need to agree to the terms of service";
+        return
+      }
       try {
         await this.$axios.$post("/register", {
           user: this.user
         });
         this.$router.push("/login");
       } catch (error) {
-        console.log(error);
+        this.error = error.response.statusText;
       }
     }
   }
