@@ -2,7 +2,9 @@
   <div>
     <Header />
     <div class="container mx-auto">
-      <h1 class="text-white text-5xl font-semibold text-center mt-5">Welcome to the coolest social network!</h1>
+      <h1 class="text-white text-4xl font-semibold text-center mt-10">
+        Hello {{firstname}}! 
+      </h1>
     </div>
   </div>
 </template>
@@ -12,11 +14,21 @@ import Header from "../components/Header.vue";
 export default {
   components: { Header },
   middleware: "auth",
+  computed: {
+    token() {
+      return this.$store.state.token;
+    },
+    firstname() {
+      return this.$store.state.user.firstname;
+    }
+  },
   async created() {
-        const user = await this.$axios.$get("/user");
-        this.$store.dispatch("saveUser", user);
+    try {
+      const user = await this.$axios.$get("/user");
+      this.$store.dispatch("saveUser", user);
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 </script>
-
-<style></style>
