@@ -44,13 +44,13 @@
           class="p-1 placeholder-black focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
           type="date"
         />
-        <select
+        <select v-model="user.country"
           name="countries"
           id="country"
           class="p-1 placeholder-black focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
           
         >
-          <option :value="user.country" disabled hidden>Country</option>
+          <option disabled hidden>Country</option>
           <option
             v-for="country in countries"
             :key="country"
@@ -58,12 +58,20 @@
             >{{ country }}</option
           >
         </select>
+
         <button
           @click="updateProfile"
           class="bg-indigo-500 mb-4 shadow-md text-lg text-white font-medium h-10 rounded-md hover:bg-indigo-400"
         >
           Update profile
         </button>
+      
+         <div
+        v-if="error"
+        class="bg-pink-600 rounded-md mt-4 text-white p-2 font-medium text-center text-lg"
+      >
+        {{ error }}
+      </div>
       </div>
     </div>
   </div>
@@ -77,8 +85,8 @@ export default {
   async created() {
     try {
       this.user = await this.$axios.$get("/user");
-      this.user.birthday = this.user.birthday.slice(0,10);
-      console.log(this.user.birthday);
+      this.user.birthday = this.user.birthday.slice(0,10); // formatting the string 
+      console.log(this.user);
     } catch(error){
       console.log(error);
     }
@@ -93,10 +101,15 @@ export default {
         birthday: null,
         country: ""
       },
-      countries: ["Denmark", "Sweden", "Norway", "Finland"]
+      countries: ["Denmark", "Sweden", "Norway", "Finland"],
+      error: ''
     };
   },
   methods: {
+    /* updateCountry(){
+      this.user.country = document.querySelector()
+
+    }, */
     async updateProfile() {
       try {
         const response = await this.$axios.patch("/user", {
@@ -104,7 +117,7 @@ export default {
         });
         //console.log(response);
       } catch (error) {
-        console.log(error);
+        this.error = error.response.statusText;
       }
     }
   }
