@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto pt-12">
+  <div class="container mx-auto pt-10 md:pt-24">
     <div
       id="card"
       class="max-w-xs p-5 mx-auto flex flex-col bg-white rounded-xl h-80 lg:h-96 shadow-2x md:p-10 md:max-w-md"
