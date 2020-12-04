@@ -121,7 +121,7 @@
                   @click="toggle"
                   class="h-8 w-8 rounded-full"
                   :src="[profileImage ? profileImage : require('~/assets/anonymous.svg')]"
-                  alt=""
+                  alt="profile picture"
                 />
               </button>
             </div>
@@ -203,7 +203,7 @@
 export default {
   computed: {
     profileImage() {
-      return this.$store.getters.user.profileImage;
+      return this.$store.getters.user.profilePicURL;
     }
   },
   data() {
