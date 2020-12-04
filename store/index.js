@@ -6,7 +6,9 @@ export const state = () => ({
     email: "",
     password: "",
     birthday: null,
-    country: ""
+    country: "",
+    profilePicURL: '',
+    _id: ''
   }
 });
 
