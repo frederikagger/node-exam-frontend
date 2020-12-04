@@ -1,6 +1,4 @@
 <template>
-  <div>
-    <myHeader />
     <div class="container mx-auto">
       <div
         id="card"
@@ -11,8 +9,7 @@
         </h4>
         <div class="flex">
           <input
-           v-model="user.firstname"
-          
+            v-model="user.firstname"
             id="firstname"
             class="p-1 placeholder-black w-1/2 mr-3 focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
             type="text"
@@ -33,7 +30,8 @@
           type="text"
         />
         <input
-          v-model="user.password"
+          value="******"
+          @change="editPassword"
           id="password"
           class="p-1 placeholder-black focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
           type="password"
@@ -44,11 +42,11 @@
           class="p-1 placeholder-black focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
           type="date"
         />
-        <select v-model="user.country"
+        <select
+          v-model="user.country"
           name="countries"
           id="country"
           class="p-1 placeholder-black focus:placeholder-grey-300 border mb-4 text-black text-lg bg-indigo-100 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-          
         >
           <option disabled hidden>Country</option>
           <option
@@ -65,35 +63,42 @@
         >
           Update profile
         </button>
-      
-         <div
-        v-if="error"
-        class="bg-pink-600 rounded-md mt-4 text-white p-2 font-medium text-center text-lg"
-      >
-        {{ error }}
-      </div>
+        <div
+          v-if="succes"
+          class="bg-green-600 rounded-md mt-4 text-white p-2 font-medium text-center text-lg"
+        >
+          {{ succes }}
+        </div>
+
+        <div
+          v-if="error"
+          class="bg-pink-600 rounded-md mt-4 text-white p-2 font-medium text-center text-lg"
+        >
+          {{ error }}
+        </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
-import myHeader from "../../components/Header.vue";
 export default {
-  components: { myHeader },
   middleware: "auth",
+  /* computed: {
+    userPassword() {
+      return '******'
+    }
+  }, */
   async created() {
     try {
       this.user = await this.$axios.$get("/user");
-      this.user.birthday = this.user.birthday.slice(0,10); // formatting the string 
-      console.log(this.user);
-    } catch(error){
+      this.user.birthday = this.user.birthday.slice(0, 10); // formatting the date string
+    } catch (error) {
       console.log(error);
     }
   },
   data() {
     return {
-       user: {
+      user: {
         firstname: "",
         lastname: "",
         email: "",
@@ -102,20 +107,22 @@ export default {
         country: ""
       },
       countries: ["Denmark", "Sweden", "Norway", "Finland"],
-      error: ''
+      error: "",
+      succes: ''
     };
   },
   methods: {
-    /* updateCountry(){
-      this.user.country = document.querySelector()
-
-    }, */
+    editPassword(event) {
+      this.user.password = event.target.value;
+    },
     async updateProfile() {
       try {
-        const response = await this.$axios.patch("/user", {
+        const response = await this.$axios.$patch("/user", {
           user: this.user
         });
-        //console.log(response);
+        this.user = response;
+        this.user.birthday = this.user.birthday.slice(0, 10); // formatting the date string
+        this.succes = "Profile was updated"
       } catch (error) {
         this.error = error.response.statusText;
       }
