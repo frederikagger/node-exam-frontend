@@ -60,10 +60,10 @@
         >
           <div class="hidden sm:block sm:ml-6">
             <div class="flex space-x-4">
-              <router-link
+              <nuxt-link
                 :to="'/users'"
                 class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
-                >Dashboard</router-link
+                >Dashboard</nuxt-link
               >
               <a
                 href="#"
@@ -142,17 +142,17 @@
               aria-orientation="vertical"
               aria-labelledby="user-menu"
             >
-              <router-link
+              <nuxt-link
                 :to="'/profile'"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 role="menuitem"
-                >Profile</router-link
+                >Profile</nuxt-link
               >
-              <router-link
+              <nuxt-link
                 :to="'/settings'"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 role="menuitem"
-                >Settings</router-link
+                >Settings</nuxt-link
               >
               <a @click="signout"
                 href="#"
