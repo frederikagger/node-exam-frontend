@@ -20,8 +20,8 @@ export default {
   css: [],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~plugins/filters.js'],
-  
+  plugins: ["~plugins/filters.js"],
+
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
 
@@ -34,8 +34,15 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/axios
-    "@nuxtjs/axios"
-  ],
+    "@nuxtjs/axios", 'nuxt-socket-io',
+  ], io: {
+    // module options
+    sockets: [{
+      name: 'main',
+      url: 'http://localhost:8000',
+      default: true,
+    }]
+  },
 
   loading: {
     height: "4px",
