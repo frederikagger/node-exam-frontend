@@ -65,10 +65,10 @@
                 class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
                 >Dashboard</nuxt-link
               >
-              <a
-                href="#"
+              <nuxt-link
+                :to="'/chat'"
                 class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
-                >Team</a
+                >Chat</nuxt-link
               >
               <a
                 href="#"
@@ -173,15 +173,15 @@
   -->
     <div class="sm:hidden" :class="{hidden: hideMobileDropdown}">
       <div class="px-2 pt-2 pb-3 space-y-1">
-        <a
-          href="#"
+        <nuxt-link
+                :to="'/users'"
           class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
-          >Dashboard</a
+          >Dashboard</nuxt-link
         >
-        <a
-          href="#"
+        <nuxt-link
+          :to="'/chat'"
           class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
-          >Team</a
+          >Chat</nuxt-link
         >
         <a
           href="#"
