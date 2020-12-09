@@ -34,14 +34,19 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/axios
-    "@nuxtjs/axios", 'nuxt-socket-io',
-  ], io: {
+    "@nuxtjs/axios",
+    "nuxt-socket-io",
+    "@nuxtjs/dotenv"
+  ],
+  io: {
     // module options
-    sockets: [{
-      name: 'main',
-      url: 'http://localhost:8000',
-      default: true,
-    }]
+    sockets: [
+      {
+        name: "main",
+        url: process.env.BASE_URL,
+        default: true
+      }
+    ]
   },
 
   loading: {
@@ -55,8 +60,7 @@ export default {
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    //baseURL: 'https://node-exam-restapi.herokuapp.com/'
-    baseURL: "http://localhost:8000"
+    baseURL: process.env.BASE_URL
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
