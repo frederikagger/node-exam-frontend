@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       users: [],
-      limit: 5,
+      limit: 10,
       page: 1
     };
   },

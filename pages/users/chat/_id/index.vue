@@ -42,10 +42,16 @@ export default {
   },
   mounted() {
     this.socket = this.$nuxtSocket({});
+    this.socket.on("connect", ()=> console.log(this.socket.id));
     this.socket.on("server emit", (msg, cb) => {
       const { message } = msg;
       this.chat = this.chat + message;
     });
+  },
+  computed: {
+    user() {
+      this.$store.getters.user;
+    }
   },
   methods: {
     send() {
