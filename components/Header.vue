@@ -70,16 +70,6 @@
                 class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
                 >Chat</nuxt-link
               >
-              <a
-                href="#"
-                class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
-                >Projects</a
-              >
-              <a
-                href="#"
-                class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
-                >Calendar</a
-              >
             </div>
           </div>
         </div>
@@ -182,16 +172,6 @@
           :to="'/chat'"
           class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
           >Chat</nuxt-link
-        >
-        <a
-          href="#"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
-          >Projects</a
-        >
-        <a
-          href="#"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
-          >Calendar</a
         >
       </div>
     </div>
