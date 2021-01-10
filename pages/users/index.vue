@@ -6,10 +6,9 @@
 </template>
 
 <script>
-import pagination from "../../components/pagination.vue";
 import UserCard from "../../components/userCard.vue";
 export default {
-  components: { pagination, UserCard },
+  components: UserCard,
   middleware: "auth",
   data() {
     return {
