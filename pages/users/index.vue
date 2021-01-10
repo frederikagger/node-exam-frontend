@@ -2,7 +2,6 @@
   <div class="container mx-auto">
     <h1 class="text-white mt-4 text-5xl text-center">Users</h1>
     <user-card v-for="user in users" :user="user" :key="user._id" />
-    <pagination />
   </div>
 </template>
 
