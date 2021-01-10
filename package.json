@@ -14,9 +14,7 @@
     "core-js": "^3.6.5",
     "nuxt": "^2.14.6",
     "nuxt-socket-io": "^1.1.13",
-    "socket.io-client": "^3.0.4"
-  },
-  "devDependencies": {
+    "socket.io-client": "^3.0.4",
     "@nuxtjs/tailwindcss": "^3.4.2"
   }
 }
